@@ -1,6 +1,7 @@
 from ninja import Router
 from .models import Aerodrome
 from .schemas import AerodromeSchema
+from ninja.errors import HttpError
 
 aerodromer_router = Router()
 
@@ -12,4 +13,8 @@ def get_aerodromes(request):
 
 @aerodromer_router.get('/{icao_code}', response=AerodromeSchema)
 def get_aerodrome(request, icao_code: str):
-    return Aerodrome.objects.get(icao_code=icao_code)
+    try:
+        return Aerodrome.objects.get(icao_code=icao_code)
+    except Aerodrome.DoesNotExist:
+        raise HttpError(404, 'Aerodrome not found')
+
