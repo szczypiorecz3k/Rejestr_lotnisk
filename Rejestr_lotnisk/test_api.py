@@ -1,12 +1,14 @@
-from .models import Aerodrome
 import pytest
+
+from .models import Aerodrome
+
 
 @pytest.mark.django_db
 def test_get_aerodromes(client):
     Aerodrome.objects.create(
-        icao_code = 'EPWA', 
-        name = 'Port Lotniczy Warszawa-Okęcie im.Fryderyka Chopina',
-        city = 'Warszawa'
+        icao_code='EPWA',
+        name='Port Lotniczy Warszawa-Okęcie im.Fryderyka Chopina',
+        city='Warszawa',
     )
     response = client.get('/api/aerodrome/')
 
@@ -18,28 +20,30 @@ def test_get_aerodromes(client):
     assert data[0]['name'] == 'Port Lotniczy Warszawa-Okęcie im.Fryderyka Chopina'
     assert data[0]['city'] == 'Warszawa'
 
+
 @pytest.mark.django_db
 def test_get_aerodrome_by_icao_code(client):
     Aerodrome.objects.create(
-        icao_code = 'EPWA', 
-        name = 'Port Lotniczy Warszawa-Okęcie im.Fryderyka Chopina',
-        city = 'Warszawa'
+        icao_code='EPWA',
+        name='Port Lotniczy Warszawa-Okęcie im.Fryderyka Chopina',
+        city='Warszawa',
     )
-    
+
     response = client.get('/api/aerodrome/EPWA')
 
     assert response.status_code == 200
     data = response.json()
     assert data['icao_code'] == 'EPWA'
 
+
 @pytest.mark.django_db
 def test_get_non_existing_aerodrome_by_icao_code(client):
     Aerodrome.objects.create(
-        icao_code = 'EPWA', 
-        name = 'Port Lotniczy Warszawa-Okęcie im.Fryderyka Chopina',
-        city = 'Warszawa'
+        icao_code='EPWA',
+        name='Port Lotniczy Warszawa-Okęcie im.Fryderyka Chopina',
+        city='Warszawa',
     )
-    
+
     response = client.get('/api/aerodrome/XXXX')
 
     assert response.status_code == 404

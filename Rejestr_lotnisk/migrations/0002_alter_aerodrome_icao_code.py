@@ -5,7 +5,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('Rejestr_lotnisk', '0001_initial'),
     ]
@@ -14,6 +13,10 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='aerodrome',
             name='icao_code',
-            field=models.CharField(max_length=4, unique=True, validators=[django.core.validators.RegexValidator('^[A-Z]{4}$')]),
+            field=models.CharField(
+                max_length=4,
+                unique=True,
+                validators=[django.core.validators.RegexValidator('^[A-Z]{4}$')],
+            ),
         ),
     ]
