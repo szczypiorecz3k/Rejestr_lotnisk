@@ -18,5 +18,6 @@ def aerodrome_created_count_handler(event: AerodromeCreatedEvent) -> None:
             'total': Aerodrome.objects.count(),
             'id': 1},
     )
+    print('git')
     counter.total += 1
     counter.save()

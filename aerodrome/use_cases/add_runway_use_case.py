@@ -2,7 +2,6 @@
 from pydantic import BaseModel
 from aerodrome.repositories.runway_repository import RunwayRepository
 from aerodrome.models.aerodrome import Aerodrome
-from injector import inject
 from aerodrome.exceptions import AerodromeAddRunwayUseCaseError
 
 
@@ -13,7 +12,6 @@ class AddRunwayInputDto(BaseModel):
 
 
 class AddRunwayUseCase:
-    @inject
     def __init__(self, runway_repository: RunwayRepository):
         self.runway_repository = runway_repository
 

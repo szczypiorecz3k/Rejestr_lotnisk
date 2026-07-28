@@ -1,9 +1,8 @@
 from pydantic import BaseModel
-from injector import inject
 from aerodrome.repositories.aerodrome_repository import AerodromeRepository
 from aerodrome.repositories.runway_repository import RunwayRepository
 from aerodrome.exceptions import AerodromeAddAerodromeUseCaseError, AerodromeAddRunwayUseCaseError
-from ...event_bus.event_bus import event_bus
+from event_bus.event_bus import event_bus
 from ..events import AerodromeCreatedEvent
 
 
@@ -13,17 +12,16 @@ class AddAerodromeInputDto(BaseModel):
     city: str
 
 
-class AddAerodromeWithRunwaysInputDto(AddAerodromeInputDto):
-    runways: list[CreateRunwayInputDto]
-
-
 class CreateRunwayInputDto(BaseModel):
     len: int
     code: str
 
 
+class AddAerodromeWithRunwaysInputDto(AddAerodromeInputDto):
+    runways: list[CreateRunwayInputDto]
+
+
 class AddAerodromeUseCase:
-    @inject
     def __init__(self, aerodrome_repository: AerodromeRepository):
         self.aerodrome_repository = aerodrome_repository
 
@@ -40,7 +38,6 @@ class AddAerodromeUseCase:
 
 
 class AddAerodromeWithRunwaysUseCase:
-    @inject
     def __init__(self, aerodrome_repository: AerodromeRepository, runway_repository: RunwayRepository):
         self.aerodrome_repository = aerodrome_repository
         self.runway_repository = runway_repository

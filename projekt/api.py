@@ -1,6 +1,6 @@
 from ninja import NinjaAPI
 
-from aerodrome.api import aerodromer_router
+from aerodrome.api import aerodrome_router
 
 api = NinjaAPI()
-api.add_router('/aerodrome/', aerodromer_router)
+api.add_router('/aerodrome/', aerodrome_router)

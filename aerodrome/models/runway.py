@@ -10,7 +10,7 @@ class Runway(models.Model):
     aerodrome: Aerodrome - aerodrome object where the runway is located
     '''
     class Meta:
-        unique_together = [('aerodorme', 'code')]
+        unique_together = [('aerodrome', 'code')]
 
     len = models.IntegerField()
     code = models.CharField(max_length=3)
