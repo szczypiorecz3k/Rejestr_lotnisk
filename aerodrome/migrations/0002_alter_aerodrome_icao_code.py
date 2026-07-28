@@ -6,7 +6,7 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
     dependencies = [
-        ('Rejestr_lotnisk', '0001_initial'),
+        ('aerodrome', '0001_initial'),
     ]
 
     operations = [
@@ -16,7 +16,8 @@ class Migration(migrations.Migration):
             field=models.CharField(
                 max_length=4,
                 unique=True,
-                validators=[django.core.validators.RegexValidator('^[A-Z]{4}$')],
+                validators=[
+                    django.core.validators.RegexValidator('^[A-Z]{4}$')],
             ),
         ),
     ]

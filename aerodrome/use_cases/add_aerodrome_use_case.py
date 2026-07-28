@@ -3,6 +3,8 @@ from injector import inject
 from aerodrome.repositories.aerodrome_repository import AerodromeRepository
 from aerodrome.repositories.runway_repository import RunwayRepository
 from aerodrome.exceptions import AerodromeAddAerodromeUseCaseError, AerodromeAddRunwayUseCaseError
+from ...event_bus.event_bus import event_bus
+from ..events import AerodromeCreatedEvent
 
 
 class AddAerodromeInputDto(BaseModel):
@@ -63,3 +65,4 @@ class AddAerodromeWithRunwaysUseCase:
                 )
             except Exception as exc:
                 raise AerodromeAddRunwayUseCaseError(runway.code) from exc
+        event_bus.publish(AerodromeCreatedEvent(icao_code=aerodrome.icao_code))

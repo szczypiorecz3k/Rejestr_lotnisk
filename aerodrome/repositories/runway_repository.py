@@ -1,15 +1,16 @@
 from aerodrome.models.runway import Runway
 from aerodrome.models.aerodrome import Aerodrome
 from .aerodrome_repository import AerodromeRepository
+from django.db.models import QuerySet
 
 
 class RunwayRepository:
     @staticmethod
-    def get_by_aerodrome(aerodrome):
+    def get_by_aerodrome(aerodrome) -> QuerySet[Runway]:
         return Runway.objects.filter(aerodrome=aerodrome)
 
     @staticmethod
-    def get_by_aerodrome_icao_code(icao_code):
+    def get_by_aerodrome_icao_code(icao_code) -> QuerySet[Runway]:
         return Runway.objects.filter(aerodrome__icao_code=icao_code)
 
     @staticmethod

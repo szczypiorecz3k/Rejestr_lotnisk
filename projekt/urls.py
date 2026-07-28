@@ -22,7 +22,7 @@ from django.urls import path
 from .api import api
 
 urlpatterns = [
-    path('', lambda request: HttpResponse('Rejestr lotnisk')),
+    path('', lambda request: HttpResponse('Aerodromes')),
     path('admin/', admin.site.urls),
     path('api/', api.urls),
 ]

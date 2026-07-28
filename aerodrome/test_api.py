@@ -1,6 +1,6 @@
 import pytest
 
-from .models import Aerodrome
+from .models.aerodrome import Aerodrome
 
 
 @pytest.mark.django_db

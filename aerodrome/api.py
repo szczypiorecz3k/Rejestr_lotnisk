@@ -1,7 +1,7 @@
 from ninja import Router
 from ninja.errors import HttpError
 
-from .models import Aerodrome
+from .models.aerodrome import Aerodrome
 from .schemas import AerodromeSchema
 
 aerodromer_router = Router()
