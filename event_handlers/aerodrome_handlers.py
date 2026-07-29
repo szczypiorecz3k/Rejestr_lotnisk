@@ -1,8 +1,8 @@
-from ..aerodrome.events import AerodromeCreatedEvent
-from ..aerodrome.models.aerodrome_counter import AerodromeCounter
-from ..aerodrome.models.aerodrome import Aerodrome
-from ..aerodrome.events import AerodromeCreatedEvent
-from ..event_bus.decorator import event_handler
+from aerodrome.events import AerodromeCreatedEvent, AerodromeDeletedEvent
+from aerodrome.models.aerodrome_stats import AerodromeStats
+from aerodrome.models.aerodrome import Aerodrome
+from aerodrome.events import AerodromeCreatedEvent, AerodromeDeletedEvent
+from event_bus.decorator import event_handler
 
 
 @event_handler(AerodromeCreatedEvent)
@@ -12,12 +12,19 @@ def aerodrome_created_handler(event: AerodromeCreatedEvent) -> None:
 
 @event_handler(AerodromeCreatedEvent)
 def aerodrome_created_count_handler(event: AerodromeCreatedEvent) -> None:
-    counter, _ = AerodromeCounter.objects.get_or_create(
+    counter, _ = AerodromeStats.objects.get_or_create(
         id=1,
         defaults={
-            'total': Aerodrome.objects.count(),
+            'total': 0,
             'id': 1},
     )
-    print('git')
-    counter.total += 1
+    print('Aerodrome counted')
+    counter.total = Aerodrome.objects.count()
+    counter.save()
+
+
+@event_handler(AerodromeDeletedEvent)
+def aerodrome_deleted_handler(event: AerodromeDeletedEvent) -> None:
+    counter = AerodromeStats.objects.first()
+    counter.total = Aerodrome.objects.count()
     counter.save()

@@ -1,6 +1,7 @@
 from ..repositories.aerodrome_repository import AerodromeRepository
 from ..repositories.runway_repository import RunwayRepository
-from ..schemas.out_schemas import AerodromeWithRunwaysOutSchema, RunwayOutSchema
+from ..schemas import AerodromeWithRunwaysOutSchema, RunwayOutSchema
+from aerodrome.models.aerodrome_stats import AerodromeStats
 
 
 class AerodromeWithRunwaysQuery:

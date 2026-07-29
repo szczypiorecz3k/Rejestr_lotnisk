@@ -1,4 +1,5 @@
 from aerodrome.models.aerodrome import Aerodrome
+from ..exceptions import AerodromeNotExistError
 
 
 class AerodromeRepository:
@@ -7,7 +8,10 @@ class AerodromeRepository:
     '''
     @staticmethod
     def get_by_icao_code(icao_code):
-        return Aerodrome.objects.get(icao_code=icao_code)
+        try:
+            return Aerodrome.objects.get(icao_code=icao_code.upper())
+        except Aerodrome.DoesNotExist:
+            raise AerodromeNotExistError(icao_code=icao_code)
 
     @staticmethod
     def get_by_city(city):
@@ -27,3 +31,7 @@ class AerodromeRepository:
                                         name=name,
                                         city=city,
                                         )
+
+    @staticmethod
+    def delete(icao_code):
+        AerodromeRepository.get_by_icao_code(icao_code=icao_code).delete()

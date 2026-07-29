@@ -17,8 +17,9 @@ class EventBus:
 
     def publish(self, event: BaseEvent) -> None:
         for handler in self._handlers[type(event)]:
-            print(handler.__name__)
+            print('Executing', handler.__name__)
             handler(event)
 
 
 event_bus = EventBus()
+print('EVENT BUS', id(event_bus))

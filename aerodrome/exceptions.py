@@ -15,3 +15,9 @@ class AerodromeAddRunwayUseCaseError(AerodromeError):
     def __init__(self, code):
         self.details = f'Failed to create runway {code}.'
         super().__init__(self.details)
+
+
+class AerodromeNotExistError(AerodromeError):
+    def __init__(self, icao_code):
+        self.details = f'There is no aerodrome with {icao_code} icao_code.'
+        super().__init__(self.details)
