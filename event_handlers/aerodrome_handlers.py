@@ -18,9 +18,9 @@ def aerodrome_created_count_handler(event: AerodromeCreatedEvent) -> None:
             'total': 0,
             'id': 1},
     )
-    print('Aerodrome counted')
     counter.total = Aerodrome.objects.count()
     counter.save()
+    print('Aerodrome counted.')
 
 
 @event_handler(AerodromeDeletedEvent)
@@ -28,3 +28,4 @@ def aerodrome_deleted_handler(event: AerodromeDeletedEvent) -> None:
     counter = AerodromeStats.objects.first()
     counter.total = Aerodrome.objects.count()
     counter.save()
+    print('Aerodrome deleted.')

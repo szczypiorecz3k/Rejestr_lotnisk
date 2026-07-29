@@ -1,6 +1,6 @@
 import pytest
 
-from .models.aerodrome import Aerodrome
+from aerodrome.models.aerodrome import Aerodrome
 
 
 @pytest.mark.django_db
@@ -47,3 +47,10 @@ def test_get_non_existing_aerodrome_by_icao_code(client):
     response = client.get('/api/aerodrome/XXXX')
 
     assert response.status_code == 404
+
+
+'''
+test_post_aerodrome_with_runways
+test_delete_non_existing_aerodrome
+test_get_aerodrome_count
+'''

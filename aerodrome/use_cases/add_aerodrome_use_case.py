@@ -27,7 +27,7 @@ class AddAerodromeUseCase:
 
     def execute(self, input_dto: AddAerodromeInputDto):
         try:
-            self.aerodrome_repository.create(
+            aerodrome = self.aerodrome_repository.create(
                 icao_code=input_dto.icao_code,
                 name=input_dto.name,
                 city=input_dto.city,
@@ -35,6 +35,7 @@ class AddAerodromeUseCase:
         except Exception as exc:
             raise AerodromeAddAerodromeUseCaseError(
                 input_dto.icao_code) from exc
+        event_bus.publish(AerodromeCreatedEvent(icao_code=aerodrome.icao_code))
 
 
 class AddAerodromeWithRunwaysUseCase:
