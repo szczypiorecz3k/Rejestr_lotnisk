@@ -33,6 +33,7 @@ class AddAerodromeUseCase:
                 city=input_dto.city,
             )
         except Exception as exc:
+            print(exc)
             raise AerodromeAddAerodromeUseCaseError(
                 input_dto.icao_code) from exc
         event_bus.publish(AerodromeCreatedEvent(icao_code=aerodrome.icao_code))

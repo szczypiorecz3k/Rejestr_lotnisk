@@ -6,8 +6,8 @@ from django.db.models import QuerySet
 
 class RunwayRepository:
     @staticmethod
-    def get_by_aerodrome(aerodrome) -> QuerySet[Runway]:
-        return Runway.objects.filter(aerodrome=aerodrome)
+    def get_by_aerodrome(aerodrome_icao_code) -> QuerySet[Runway]:
+        return Runway.objects.filter(aerodrome=aerodrome_icao_code)
 
     @staticmethod
     def get_by_aerodrome_icao_code(icao_code) -> QuerySet[Runway]:

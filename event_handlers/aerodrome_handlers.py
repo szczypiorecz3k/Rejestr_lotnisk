@@ -12,20 +12,25 @@ def aerodrome_created_handler(event: AerodromeCreatedEvent) -> None:
 
 @event_handler(AerodromeCreatedEvent)
 def aerodrome_created_count_handler(event: AerodromeCreatedEvent) -> None:
-    counter, _ = AerodromeStats.objects.get_or_create(
-        id=1,
-        defaults={
-            'total': 0,
-            'id': 1},
-    )
-    counter.total = Aerodrome.objects.count()
-    counter.save()
+    stats = get_or_create_aerodrome_stats()
+    stats.total = Aerodrome.objects.count()
+    stats.save()
     print('Aerodrome counted.')
 
 
 @event_handler(AerodromeDeletedEvent)
 def aerodrome_deleted_handler(event: AerodromeDeletedEvent) -> None:
-    counter = AerodromeStats.objects.first()
-    counter.total = Aerodrome.objects.count()
-    counter.save()
+    stats = get_or_create_aerodrome_stats()
+    stats.total = Aerodrome.objects.count()
+    stats.save()
     print('Aerodrome deleted.')
+
+
+def get_or_create_aerodrome_stats():
+    stats, _ = AerodromeStats.objects.get_or_create(
+        id=1,
+        defaults={
+            'total': 0,
+            'id': 1},
+    )
+    return stats

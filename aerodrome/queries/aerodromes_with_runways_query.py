@@ -11,7 +11,8 @@ class AerodromeWithRunwaysQuery:
         Returns aerodrome with a list of runways by icao_code
         """
         aerodrome = AerodromeRepository.get_by_icao_code(icao_code=icao_code)
-        runways = RunwayRepository.get_by_aerodrome(aerodrome=aerodrome)
+        runways = RunwayRepository.get_by_aerodrome(
+            aerodrome_icao_code=aerodrome)
 
         return AerodromeWithRunwaysOutSchema(
             icao_code=aerodrome.icao_code,
