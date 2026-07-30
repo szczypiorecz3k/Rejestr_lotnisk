@@ -1,14 +1,13 @@
-
 from pydantic import BaseModel
+
+from aerodrome.repositories.aerodrome_repository import AerodromeRepository
 from aerodrome.repositories.runway_repository import RunwayRepository
-from aerodrome.models.aerodrome import Aerodrome
-from aerodrome.exceptions import AerodromeAddRunwayUseCaseError
 
 
 class AddRunwayInputDto(BaseModel):
     len: int
     code: str
-    aerodrome: Aerodrome | None = None
+    aerodrome_icao_code: str | None = None
 
 
 class AddRunwayUseCase:
@@ -17,10 +16,16 @@ class AddRunwayUseCase:
 
     def execute(self, input_dto: AddRunwayInputDto):
         try:
+            print('START')
+            aerodrome = AerodromeRepository.get_by_icao_code(input_dto.aerodrome_icao_code)
+            print(f'Aerodroeme {aerodrome.icao_code} found')
+
             self.runway_repository.create(
                 len=input_dto.len,
                 code=input_dto.code,
-                aerodrome=input_dto.aerodrome,
+                aerodrome=aerodrome,
             )
+            print('Runway created.')
         except Exception as exc:
-            raise AerodromeAddRunwayUseCaseError(input_dto.code) from exc
+            raise (exc)
+            # raise AerodromeAddRunwayUseCaseError(input_dto.code) from exc

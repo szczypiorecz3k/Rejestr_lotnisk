@@ -1,17 +1,19 @@
 from aerodrome.models.aerodrome import Aerodrome
+
 from ..exceptions import AerodromeNotExistError
 
 
 class AerodromeRepository:
-    '''
+    """
     Repository for Aerodrome operations.
-    '''
+    """
+
     @staticmethod
     def get_by_icao_code(icao_code):
         try:
             return Aerodrome.objects.get(icao_code=icao_code.upper())
-        except Aerodrome.DoesNotExist:
-            raise AerodromeNotExistError(icao_code=icao_code)
+        except Aerodrome.DoesNotExist as err:
+            raise AerodromeNotExistError(icao_code=icao_code) from err
 
     @staticmethod
     def get_by_city(city):
@@ -27,10 +29,11 @@ class AerodromeRepository:
         city: str - location of the aerodrome or nearest big city
         """
 
-        return Aerodrome.objects.create(icao_code=icao_code,
-                                        name=name,
-                                        city=city,
-                                        )
+        return Aerodrome.objects.create(
+            icao_code=icao_code,
+            name=name,
+            city=city,
+        )
 
     @staticmethod
     def delete(icao_code):

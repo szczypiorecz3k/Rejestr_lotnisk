@@ -2,13 +2,16 @@ from ninja import Router
 from ninja.errors import HttpError
 
 from .models.aerodrome import Aerodrome
-from .schemas import AerodromeOutSchema
-from .repositories.aerodrome_repository import AerodromeRepository
-from .repositories.runway_repository import RunwayRepository
-from .use_cases.add_aerodrome_use_case import AddAerodromeWithRunwaysInputDto, AddAerodromeWithRunwaysUseCase
-from .use_cases.delete_aerodrome_use_case import DeleteAerodromeUseCase
 from .models.aerodrome_stats import AerodromeStats
 from .queries.aerodromes_with_runways_query import AerodromeWithRunwaysQuery
+from .repositories.aerodrome_repository import AerodromeRepository
+from .repositories.runway_repository import RunwayRepository
+from .schemas import AerodromeOutSchema
+from .use_cases.add_aerodrome_use_case import (
+    AddAerodromeWithRunwaysInputDto,
+    AddAerodromeWithRunwaysUseCase,
+)
+from .use_cases.delete_aerodrome_use_case import DeleteAerodromeUseCase
 
 aerodrome_router = Router()
 
@@ -33,8 +36,7 @@ def get_aerodrome(request, icao_code: str):
 
 @aerodrome_router.post('/')
 def add_aerodrome_with_runways(request, data: AddAerodromeWithRunwaysInputDto) -> str:
-    use_case = AddAerodromeWithRunwaysUseCase(
-        AerodromeRepository(), RunwayRepository())
+    use_case = AddAerodromeWithRunwaysUseCase(AerodromeRepository(), RunwayRepository())
     use_case.execute(data)
     return 'Aerodrome created'
 

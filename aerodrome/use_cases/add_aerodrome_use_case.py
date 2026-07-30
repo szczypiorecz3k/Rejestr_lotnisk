@@ -1,8 +1,10 @@
 from pydantic import BaseModel
+
+from aerodrome.exceptions import AerodromeAddAerodromeUseCaseError, AerodromeAddRunwayUseCaseError
 from aerodrome.repositories.aerodrome_repository import AerodromeRepository
 from aerodrome.repositories.runway_repository import RunwayRepository
-from aerodrome.exceptions import AerodromeAddAerodromeUseCaseError, AerodromeAddRunwayUseCaseError
 from event_bus.event_bus import event_bus
+
 from ..events import AerodromeCreatedEvent
 
 
@@ -34,13 +36,14 @@ class AddAerodromeUseCase:
             )
         except Exception as exc:
             print(exc)
-            raise AerodromeAddAerodromeUseCaseError(
-                input_dto.icao_code) from exc
+            raise AerodromeAddAerodromeUseCaseError(input_dto.icao_code) from exc
         event_bus.publish(AerodromeCreatedEvent(icao_code=aerodrome.icao_code))
 
 
 class AddAerodromeWithRunwaysUseCase:
-    def __init__(self, aerodrome_repository: AerodromeRepository, runway_repository: RunwayRepository):
+    def __init__(
+        self, aerodrome_repository: AerodromeRepository, runway_repository: RunwayRepository
+    ):
         self.aerodrome_repository = aerodrome_repository
         self.runway_repository = runway_repository
 
@@ -52,8 +55,7 @@ class AddAerodromeWithRunwaysUseCase:
                 city=input_dto.city,
             )
         except Exception as exc:
-            raise AerodromeAddAerodromeUseCaseError(
-                input_dto.icao_code) from exc
+            raise AerodromeAddAerodromeUseCaseError(input_dto.icao_code) from exc
 
         for runway in input_dto.runways:
             try:

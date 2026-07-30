@@ -1,5 +1,6 @@
-from .base_event import BaseEvent
 from functools import wraps
+
+from .base_event import BaseEvent
 from .event_bus import event_bus
 
 
@@ -12,6 +13,8 @@ def event_handler(event_type: type[BaseEvent]):
         @wraps(func)
         def wrapper(*args, **kwargs):
             return func(*args, **kwargs)
+
         event_bus.subcribe(event_type=event_type, event_handler=func)
         return wrapper
+
     return decorator

@@ -1,8 +1,8 @@
-from unittest.mock import Mock
-
 import pytest
 
+from aerodrome.repositories.aerodrome_repository import AerodromeRepository
 from aerodrome.use_cases.add_aerodrome_use_case import AddAerodromeInputDto, AddAerodromeUseCase
+from aerodrome.use_cases.delete_aerodrome_use_case import DeleteAerodromeUseCase
 
 
 @pytest.fixture
@@ -15,12 +15,10 @@ def aerodrome_dto():
 
 
 @pytest.fixture
-def add_aerodrome_use_case(aerodrome_repository):
-    return AddAerodromeUseCase(aerodrome_repository=aerodrome_repository)
+def add_aerodrome_use_case():
+    return AddAerodromeUseCase(AerodromeRepository())
 
 
 @pytest.fixture
-def aerodrome_repository():
-    repo = Mock()
-    repo.create.return_value = Mock(icao_code='EPWA')
-    return repo
+def delete_aerodrome_use_case():
+    return DeleteAerodromeUseCase(AerodromeRepository())

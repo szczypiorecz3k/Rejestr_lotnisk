@@ -3,6 +3,7 @@ from event_bus.base_event import BaseEvent
 
 class AerodromeModifiedEvent(BaseEvent):
     """Event emitted when aerodrome is modified."""
+
     icao_code: str
 
     @property
@@ -12,6 +13,7 @@ class AerodromeModifiedEvent(BaseEvent):
 
 class AerodromeCreatedEvent(AerodromeModifiedEvent):
     """Event emitted when aerodrome is created."""
+
     @property
     def message(self):
         return f'Aerodrome {self.icao_code} created.'
@@ -19,6 +21,7 @@ class AerodromeCreatedEvent(AerodromeModifiedEvent):
 
 class AerodromeDeletedEvent(AerodromeModifiedEvent):
     """Event emitted when aerodrome is deleted."""
+
     @property
     def message(self):
         return f'Aerodrome {self.icao_code} deleted.'

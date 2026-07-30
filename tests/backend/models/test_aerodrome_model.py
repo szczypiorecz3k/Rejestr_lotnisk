@@ -1,6 +1,7 @@
 import pytest
 from django.core.exceptions import ValidationError
 from django.db.utils import DataError, IntegrityError
+
 from aerodrome.models import Aerodrome
 
 
@@ -9,15 +10,13 @@ def test_icao_code_must_be_unique():
     Aerodrome.objects.create(icao_code='EPWA', name='Port 1', city='Warszawa')
 
     with pytest.raises(IntegrityError):
-        Aerodrome.objects.create(
-            icao_code='EPWA', name='Port 2', city='Warszawa')
+        Aerodrome.objects.create(icao_code='EPWA', name='Port 2', city='Warszawa')
 
 
 @pytest.mark.django_db
 def test_icao_code_too_long():
     with pytest.raises(DataError):
-        Aerodrome.objects.create(
-            icao_code='EPWABC', name='Port', city='Warszawa')
+        Aerodrome.objects.create(icao_code='EPWABC', name='Port', city='Warszawa')
 
 
 @pytest.mark.django_db

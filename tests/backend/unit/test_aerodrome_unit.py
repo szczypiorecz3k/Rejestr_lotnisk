@@ -12,15 +12,14 @@ def aerodrome_dto():
     return AddAerodromeInputDto(
         icao_code='EPWA',
         name='Port Lotniczy Warszawa-Okęcie im.Fryderyka Chopina',
-        city='Warszawa',)
+        city='Warszawa',
+    )
 
 
 @pytest.fixture
 def aerodrome_repository():
     repo = Mock()
-    repo.create.return_value = Mock(
-        icao_code='EPWA'
-    )
+    repo.create.return_value = Mock(icao_code='EPWA')
     return repo
 
 
@@ -47,7 +46,9 @@ def publish_mock(monkeypatch):
 
 
 @pytest.mark.django_db
-def test_add_aerodrome_use_case_calls_repository(aerodrome_dto, add_aerodrome_use_case, aerodrome_repository):
+def test_add_aerodrome_use_case_calls_repository(
+    aerodrome_dto, add_aerodrome_use_case, aerodrome_repository
+):
     add_aerodrome_use_case.execute(aerodrome_dto)
 
     aerodrome_repository.create.assert_called_once_with(
@@ -58,7 +59,9 @@ def test_add_aerodrome_use_case_calls_repository(aerodrome_dto, add_aerodrome_us
 
 
 @pytest.mark.django_db
-def test_delete_aerodrome_use_case_calls_repository(aerodrome_repository, delete_aeroddrome_use_case):
+def test_delete_aerodrome_use_case_calls_repository(
+    aerodrome_repository, delete_aeroddrome_use_case
+):
     delete_aeroddrome_use_case.execute('EPWA')
 
     aerodrome_repository.delete.assert_called_once_with('EPWA')

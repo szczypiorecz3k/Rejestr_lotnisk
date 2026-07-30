@@ -1,7 +1,6 @@
 from collections import defaultdict
 from collections.abc import Callable
 
-
 from .base_event import BaseEvent
 
 

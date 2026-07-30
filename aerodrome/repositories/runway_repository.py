@@ -1,13 +1,13 @@
-from aerodrome.models.runway import Runway
-from aerodrome.models.aerodrome import Aerodrome
-from .aerodrome_repository import AerodromeRepository
 from django.db.models import QuerySet
+
+from aerodrome.models.aerodrome import Aerodrome
+from aerodrome.models.runway import Runway
 
 
 class RunwayRepository:
     @staticmethod
-    def get_by_aerodrome(aerodrome_icao_code) -> QuerySet[Runway]:
-        return Runway.objects.filter(aerodrome=aerodrome_icao_code)
+    def get_by_aerodrome(aerodrome) -> QuerySet[Runway]:
+        return Runway.objects.filter(aerodrome=aerodrome)
 
     @staticmethod
     def get_by_aerodrome_icao_code(icao_code) -> QuerySet[Runway]:
@@ -23,6 +23,4 @@ class RunwayRepository:
         aerodrome: Aerodrome - aerodrome object where the runway is located
         """
 
-        return Runway.objects.create(len=len,
-                                     code=code,
-                                     aerodrome=aerodrome)
+        return Runway.objects.create(len=len, code=code, aerodrome=aerodrome)

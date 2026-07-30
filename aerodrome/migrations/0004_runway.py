@@ -5,7 +5,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('aerodrome', '0003_alter_aerodrome_icao_code'),
     ]
@@ -14,10 +13,22 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Runway',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                (
+                    'id',
+                    models.BigAutoField(
+                        auto_created=True, primary_key=True, serialize=False, verbose_name='ID'
+                    ),
+                ),
                 ('len', models.IntegerField()),
                 ('code', models.CharField(max_length=3)),
-                ('aerodrome', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='runways', to='aerodrome.aerodrome')),
+                (
+                    'aerodrome',
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name='runways',
+                        to='aerodrome.aerodrome',
+                    ),
+                ),
             ],
             options={
                 'unique_together': {('aerodrome', 'code')},

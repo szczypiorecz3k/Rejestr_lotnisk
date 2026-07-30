@@ -1,6 +1,7 @@
-from ..repositories.aerodrome_repository import AerodromeRepository
 from event_bus.event_bus import event_bus
+
 from ..events import AerodromeDeletedEvent
+from ..repositories.aerodrome_repository import AerodromeRepository
 
 
 class DeleteAerodromeUseCase:
