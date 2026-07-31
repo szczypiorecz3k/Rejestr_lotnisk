@@ -30,13 +30,14 @@ def get_aerodrome_counter(request) -> int:
 def get_aerodrome(request, icao_code: str):
     try:
         return AerodromeWithRunwaysQuery.get_aerodromes_with_runways(icao_code=icao_code.upper())
-    except Aerodrome.DoesNotExist:
+    except Exception:
         raise HttpError(404, 'Aerodrome not found') from None
 
 
 @aerodrome_router.post('/')
 def add_aerodrome_with_runways(request, data: AddAerodromeWithRunwaysInputDto) -> str:
-    use_case = AddAerodromeWithRunwaysUseCase(AerodromeRepository(), RunwayRepository())
+    use_case = AddAerodromeWithRunwaysUseCase(
+        AerodromeRepository(), RunwayRepository())
     use_case.execute(data)
     return 'Aerodrome created'
 

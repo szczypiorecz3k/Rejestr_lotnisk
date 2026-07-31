@@ -4,6 +4,8 @@ from aerodrome.exceptions import AerodromeNotExistError
 from aerodrome.repositories.runway_repository import RunwayRepository
 from aerodrome.use_cases.add_runway_use_case import AddRunwayInputDto, AddRunwayUseCase
 
+from tests.backend.use_cases.helpers import aerodrome_dto, add_aerodrome_use_case, delete_aerodrome_use_case
+
 
 @pytest.fixture
 def runway_dto():
@@ -26,7 +28,7 @@ def test_add_valid_runway_use_case(
 
 
 @pytest.mark.django_db
-def test_add_aerodrome_does_not_exist_runway_use_case(runway_dto, add_runway_use_case):
+def test_add_aerodrome_does_not_exist_runway_raises_exception_use_case(runway_dto, add_runway_use_case):
     with pytest.raises(AerodromeNotExistError):
         add_runway_use_case.execute(runway_dto)
 

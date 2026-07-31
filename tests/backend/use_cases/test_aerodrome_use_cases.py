@@ -4,6 +4,8 @@ from aerodrome.exceptions import AerodromeNotExistError
 from aerodrome.models import Aerodrome
 from aerodrome.models.aerodrome_stats import AerodromeStats
 
+from tests.backend.use_cases.helpers import aerodrome_dto, add_aerodrome_use_case, delete_aerodrome_use_case
+
 
 @pytest.mark.django_db
 def test_add_valid_Aerodrome(aerodrome_dto, add_aerodrome_use_case):

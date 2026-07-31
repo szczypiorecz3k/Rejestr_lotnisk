@@ -2,7 +2,9 @@ from unittest.mock import Mock
 
 import pytest
 
+from aerodrome.repositories.aerodrome_repository import AerodromeRepository
 from aerodrome.use_cases.add_runway_use_case import AddRunwayInputDto, AddRunwayUseCase
+from tests.backend.unit.helpers import aerodrome_dto, add_aerodrome_use_case, aerodrome_repository
 
 
 @pytest.fixture
@@ -20,6 +22,19 @@ def add_runway_use_case(runway_repository):
     return AddRunwayUseCase(runway_repository=runway_repository)
 
 
+@pytest.fixture(autouse=True)
+def aerodrome_get_by_icao_code_mock(monkeypatch):
+    mock = Mock()
+    mock.get_by_icao_code.return_value = Mock(icao_code='EPWA')
+
+    monkeypatch.setattr(
+        AerodromeRepository,
+        'get_by_icao_code',
+        mock,
+    )
+    return mock
+
+
 @pytest.mark.django_db
 def test_add_runway_use_case_calls_repository(
     runway_dto, runway_repository, add_runway_use_case, aerodrome_dto, add_aerodrome_use_case
@@ -28,7 +43,3 @@ def test_add_runway_use_case_calls_repository(
     add_runway_use_case.execute(runway_dto)
 
     runway_repository.create.assert_called_once()
-
-
-def test_add_runway_with_non_existing_aerodrome_use_case_raises_exception():
-    pass
