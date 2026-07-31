@@ -2,7 +2,8 @@ import pytest
 
 from aerodrome.models.aerodrome import Aerodrome
 from aerodrome.models.aerodrome_stats import AerodromeStats
-from aerodrome.use_cases.add_aerodrome_use_case import AddAerodromeInputDto, CreateRunwayInputDto
+from aerodrome.models.runway import Runway
+from aerodrome.use_cases.add_aerodrome_use_case import AddAerodromeInputDto, CreateRunwayInputDto, AddAerodromeWithRunwaysInputDto
 
 
 @pytest.fixture
@@ -24,10 +25,10 @@ def runway_dto():
 
 @pytest.fixture
 def aerodrome_with_runways_dto(aerodrome_dto, runway_dto):
-    return AddAerodromeInputDto(icao_code=aerodrome_dto.icao_code,
-                                name=aerodrome_dto.name,
-                                city=aerodrome_dto.city,
-                                runways=[runway_dto])
+    return AddAerodromeWithRunwaysInputDto(icao_code=aerodrome_dto.icao_code,
+                                           name=aerodrome_dto.name,
+                                           city=aerodrome_dto.city,
+                                           runways=[runway_dto])
 
 
 def aerodrome_create(aerodrome_dto):
@@ -75,16 +76,29 @@ def test_post_aerodrome_with_runways(client, aerodrome_with_runways_dto):
     response = client.post(
         '/api/aerodrome/', aerodrome_with_runways_dto.model_dump(mode='json'),
         content_type='application/json')
-    print(response.content)
-    print(response.json())
     assert response.status_code == 200
-    print(response.status_code)
-    print(response.content)
+    assert Aerodrome.objects.filter(icao_code='EPWA').exists()
+    assert Runway.objects.filter(code='12L').exists()
+    assert response.json() == 'Aerodrome created'
+
+
+@pytest.mark.django_db
+def test_delete_aerodrome(client, aerodrome_dto):
+    aerodrome_create(aerodrome_dto)
+    response = client.delete('/api/aerodrome/EPWA')
+
+    assert response.status_code == 200
+    assert not Aerodrome.objects.filter(icao_code='EPWA').exists()
+    print(response.json())
+    assert response.json() == 'Aerodrome deleted'
 
 
 @pytest.mark.django_db
 def test_delete_non_existing_aerodrome(client):
-    pass
+    response = client.delete('/api/aerodrome/EPWA')
+    print(response.json())
+    assert response.status_code == 404
+    assert response.json()['detail'] == 'Aerodrome not found'
 
 
 @pytest.mark.django_db

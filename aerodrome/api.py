@@ -27,7 +27,7 @@ def get_aerodrome_counter(request) -> int:
 
 
 @aerodrome_router.get('/{icao_code}', response=AerodromeOutSchema)
-def get_aerodrome(request, icao_code: str):
+def get_aerodrome_by_icao_code(request, icao_code: str):
     try:
         return AerodromeWithRunwaysQuery.get_aerodromes_with_runways(icao_code=icao_code.upper())
     except Exception:
@@ -44,6 +44,9 @@ def add_aerodrome_with_runways(request, data: AddAerodromeWithRunwaysInputDto) -
 
 @aerodrome_router.delete('/{icao_code}')
 def delete_aerodrome(request, icao_code: str) -> str:
-    use_case = DeleteAerodromeUseCase(AerodromeRepository())
-    use_case.execute(icao_code=icao_code)
-    return 'Aerodrome deleted'
+    try:
+        use_case = DeleteAerodromeUseCase(AerodromeRepository())
+        use_case.execute(icao_code=icao_code)
+        return 'Aerodrome deleted'
+    except Exception as exc:
+        raise HttpError(404, 'Aerodrome not found') from exc
