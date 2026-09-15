@@ -19,7 +19,7 @@ class Migration(migrations.Migration):
                         auto_created=True, primary_key=True, serialize=False, verbose_name='ID'
                     ),
                 ),
-                ('len', models.IntegerField()),
+                ('length', models.IntegerField()),
                 ('code', models.CharField(max_length=3)),
                 (
                     'aerodrome',

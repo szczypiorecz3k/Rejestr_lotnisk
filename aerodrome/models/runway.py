@@ -14,7 +14,7 @@ class Runway(models.Model):
     class Meta:
         unique_together = [('aerodrome', 'code')]
 
-    len = models.IntegerField(validators=[MinValueValidator(10)])
+    length = models.IntegerField(validators=[MinValueValidator(10)])
     code = models.CharField(max_length=3)
 
     aerodrome = models.ForeignKey(
@@ -26,4 +26,4 @@ class Runway(models.Model):
     )
 
     def __str__(self):
-        return f'Runway {self.code}, length:{self.len}'
+        return f'Runway {self.code}, length:{self.length}'
