@@ -1,0 +1,19 @@
+{% extends "admin/base_site.html" %}
+
+{% block title %} {{ title }} | Rejestr Lotnisk {% endblock %}
+
+{% block extrastyle %}
+<style>
+    /*hide Django administration header*/
+    #header {
+        display: none;
+    }
+
+    /*change breadcrumbs color*/
+    div.breadcrumbs {
+        background: var(--body-bg) !important;
+        border: none !important;
+        padding-left: 20px;
+    }
+</style>
+{% endblock %}

@@ -1,4 +1,4 @@
-from projekt.exceptions import BaseError
+from config.exceptions import BaseError
 
 
 class AerodromeError(BaseError):
