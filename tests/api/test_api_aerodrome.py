@@ -18,7 +18,7 @@ def aerodrome_dto():
 @pytest.fixture
 def runway_dto():
     return CreateRunwayInputDto(
-        len=200,
+        length=200,
         code='12L',
     )
 

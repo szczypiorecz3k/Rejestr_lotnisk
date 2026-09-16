@@ -6,12 +6,9 @@ from aerodrome.migrations.seed_data.runways_data import RUNWAYS
 
 
 def seed_aerodromes_with_runways(apps, schema_editor):
-    if os.getenv("PYTEST_CURRENT_TEST") or os.getenv("ENV_TYPE") != 'dev':
-        return
-
+    print('jestem')
     Aerodrome = apps.get_model('aerodrome', 'Aerodrome')
 
-    # 1. Tworzenie lotnisk
     for aerodrome_data in AERODROMES:
         Aerodrome.objects.get_or_create(
             icao_code=aerodrome_data['code'],
@@ -21,19 +18,15 @@ def seed_aerodromes_with_runways(apps, schema_editor):
             },
         )
 
-    # 2. Tworzenie pasów startowych
     Runway = apps.get_model('aerodrome', 'Runway')
     for runway_data in RUNWAYS:
-        # Pobieramy lotnisko używając poprawnego pola icao_code oraz klucza ze słownika
         aerodrome = Aerodrome.objects.get(
             icao_code=runway_data['aerodrome_code'])
 
-        Runway.objects.get_or_create(
+        Runway.objects.create(
             code=runway_data['runway_code'],
             aerodrome=aerodrome,
-            defaults={
-                'length': runway_data['tora']
-            }
+            length=runway_data['tora'],
         )
 
 
@@ -45,7 +38,7 @@ def reverse_seed_aerodromes_with_runways(apps, schema_editor):
 
 class Migration(migrations.Migration):
     dependencies = [
-        ('aerodrome', '0007_alter_aerodromestats_total_alter_runway_length'),
+        ('aerodrome', '0002_aerodromestats_alter_aerodrome_icao_code_runway'),
     ]
 
     operations = [

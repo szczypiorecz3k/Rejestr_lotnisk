@@ -15,7 +15,7 @@ class Runway(models.Model):
         unique_together = [('aerodrome', 'code')]
 
     length = models.IntegerField(validators=[MinValueValidator(10)])
-    code = models.CharField(max_length=3)
+    code = models.CharField(max_length=7)
 
     aerodrome = models.ForeignKey(
         'aerodrome.Aerodrome',

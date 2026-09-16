@@ -32,7 +32,7 @@ AERODROMES = [
     {
         "name": "Pruszcz Gdański",
         "code": "EPPR",
-        "city": "Pruszczgdański",
+        "city": "Pruszcz Gdański",
     },
     {
         "name": "Warszawa Radom",
@@ -47,6 +47,6 @@ AERODROMES = [
     {
         "name": "Berlin Brandenburg",
         "code": "EDDB",
-        "city": "Brandenburg",        
+        "city": "Brandenburg",
     }
 ]
