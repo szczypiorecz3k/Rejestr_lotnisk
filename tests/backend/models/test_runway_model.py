@@ -19,7 +19,7 @@ def test_add_length_too_short_runway():
 def test_add_code_too_long_runway():
     with pytest.raises(DataError):
         runway = Runway.objects.create(
-            length=200, code='222L', aerodrome=create_aerodrome('epwa'))
+            length=200, code='222L/144', aerodrome=create_aerodrome('epwa'))
         runway.full_clean()
 
 

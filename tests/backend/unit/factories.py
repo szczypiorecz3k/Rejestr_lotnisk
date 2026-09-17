@@ -4,7 +4,7 @@ import pytest
 
 from aerodrome.models.aerodrome import Aerodrome
 from aerodrome.models.runway import Runway
-import factory
+from factory.django import DjangoModelFactory
 
 
 class AerodromeFactory(factory.django.DjangoModelFactory):
